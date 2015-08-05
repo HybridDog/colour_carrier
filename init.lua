@@ -1,10 +1,13 @@
 local load_time_start = os.clock()
 
+--[[
+channel is "colour_carrier/"..pos.z .."/"..pos.y .."/"..pos.x
+msg is "#RRGGBB"
+]]
+
 -- the colour which is set by default
 local default_colour = "#213dff"
 
-
-local active_carriers = {}
 
 local function colour_entity(ent, col)
 	if ent.colour == col then
@@ -76,6 +79,8 @@ end
 minetest.register_node("colour_carrier:node", {
 	description = "colour carrier",
 	tiles = {"blank.png"},
+	sunlight_propagates = true,
+	paramtype = "light",
 	inventory_image = "colour_carrier.png",
 	groups = {cracky=3, stone=1},
 	sounds = default.node_sound_stone_defaults(),
