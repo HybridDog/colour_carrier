@@ -25,6 +25,11 @@ minetest.register_entity("colour_carrier:entity",{
 	physical=false,
 	textures={"air"},
 	on_activate = function(self, staticdata)
+		local pos = self.object:getpos()
+		if minetest.get_node(pos).name ~= "colour_carrier:node" then
+			self.object:remove()
+			return
+		end
 		local colour = staticdata or ""
 		if #colour ~= 7 then
 			colour = default_colour
@@ -47,7 +52,7 @@ local function get_entity(pos)
 end
 
 local function set_entity(pos)
-	return minetest.add_entity(pos, "colour_carrier:entity")
+	return minetest.add_entity(pos, "colour_carrier:entity"):get_luaentity()
 end
 
 local function remove_entity(pos)
