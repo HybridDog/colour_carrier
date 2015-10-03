@@ -20,10 +20,9 @@ end
 
 minetest.register_entity("colour_carrier:entity",{
 	visual = "cube",
-	--visual_size={x=.33,y=.33},
+	--visual_size = {x=.33,y=.33},
 	collisionbox = {0,0,0,0,0,0},
-	physical=false,
-	textures={"air"},
+	physical = false,
 	on_activate = function(self, staticdata)
 		local pos = self.object:getpos()
 		if minetest.get_node(pos).name ~= "colour_carrier:node" then
