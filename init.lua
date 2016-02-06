@@ -75,7 +75,7 @@ local function on_digiline_receive(pos, node, channel, msg)
 	local ent = get_entity(pos) or set_entity(pos)
 
 	if not ent then
-		minetest.log("error", "[colour_carrier] failed to add object."
+		minetest.log("error", "[colour_carrier] failed to add object.")
 		return
 	end
 
