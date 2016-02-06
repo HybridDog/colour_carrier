@@ -1,10 +1,5 @@
 local load_time_start = os.clock()
 
---[[
-channel is "colour_carrier/"..pos.z .."/"..pos.y .."/"..pos.x
-msg is "#RRGGBB"
-]]
-
 -- the colour which is set by default
 local default_colour = "#213dff"
 
@@ -66,15 +61,22 @@ local function pos_channel_id(pos)
 end
 
 local function on_digiline_receive(pos, node, channel, msg)
-	if #msg ~= 7
-	or channel ~= pos_channel_id(pos) then
+	if type(msg) ~= "string" then
+		return
+	end
+
+	if msg ~= "colour_carrier_all"
+	and (#msg ~= 7
+		or channel ~= pos_channel_id(pos)
+	) then
 		return
 	end
 
 	local ent = get_entity(pos) or set_entity(pos)
 
 	if not ent then
-		return	-- This should not happen
+		minetest.log("error", "[colour_carrier] failed to add object."
+		return
 	end
 
 	colour_entity(ent, msg)
@@ -95,7 +97,7 @@ minetest.register_node("colour_carrier:node", {
 		remove_entity(pos)
 	end,
 	digiline = {
-		receptor = {},
+		receptor = {action = function() end},
 		effector = {
 			action = on_digiline_receive
 		},
