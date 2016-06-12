@@ -13,7 +13,7 @@ local function colour_entity(ent, col)
 	ent.object:set_properties({textures = {t,t,t,t,t,t}})
 end
 
-minetest.register_entity("colour_carrier:entity",{
+minetest.register_entity("colour_carrier:entity", {
 	visual = "cube",
 	--visual_size = {x=.33,y=.33},
 	collisionbox = {0,0,0,0,0,0},
