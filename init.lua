@@ -65,10 +65,7 @@ local function on_digiline_receive(pos, node, channel, msg)
 		return
 	end
 
-	if msg ~= "colour_carrier_all"
-	and (#msg ~= 7
-		or channel ~= pos_channel_id(pos)
-	) then
+	if #msg ~= 7 or (channel ~= pos_channel_id(pos) and channel ~= "colour_carrier_all") then
 		return
 	end
 
