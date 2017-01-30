@@ -13,6 +13,6 @@ If you got ideas or found bugs, please tell them to me.
 
 
 TODO:  
-— add crafting  
+— --add crafting--  
 — change groups, maybe placement_prediction, etc.  
 

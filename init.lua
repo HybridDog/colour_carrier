@@ -109,3 +109,14 @@ if time > 0.05 then
 else
 	minetest.log("info", msg)
 end
+
+if minetest.get_modpath("mesecons_lightstone") then
+	minetest.register_craft({
+		output = "colour_carrier:node 3",
+		recipe = {
+			{"mesecons_lightstone:lightstone_red_off","mesecons_lightstone:lightstone_green_off","mesecons_lightstone:lightstone_blue_off"},
+			{"digilines:wire_std_00000000","digilines:wire_std_00000000","digilines:wire_std_00000000"},
+			{"mesecons_lightstone:lightstone_red_off","mesecons_lightstone:lightstone_green_off","mesecons_lightstone:lightstone_blue_off"}
+		}
+	})
+end
