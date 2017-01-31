@@ -65,10 +65,7 @@ local function on_digiline_receive(pos, node, channel, msg)
 		return
 	end
 
-	if msg ~= "colour_carrier_all"
-	and (#msg ~= 7
-		or channel ~= pos_channel_id(pos)
-	) then
+	if #msg ~= 7 or (channel ~= pos_channel_id(pos) and channel ~= "colour_carrier_all") then
 		return
 	end
 
@@ -111,4 +108,15 @@ if time > 0.05 then
 	print(msg)
 else
 	minetest.log("info", msg)
+end
+
+if minetest.get_modpath("mesecons_lightstone") then
+	minetest.register_craft({
+		output = "colour_carrier:node 3",
+		recipe = {
+			{"mesecons_lightstone:lightstone_red_off","mesecons_lightstone:lightstone_green_off","mesecons_lightstone:lightstone_blue_off"},
+			{"digilines:wire_std_00000000","digilines:wire_std_00000000","digilines:wire_std_00000000"},
+			{"mesecons_lightstone:lightstone_red_off","mesecons_lightstone:lightstone_green_off","mesecons_lightstone:lightstone_blue_off"}
+		}
+	})
 end
