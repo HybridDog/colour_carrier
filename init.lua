@@ -57,7 +57,8 @@ local function remove_entity(pos)
 end
 
 local function check_channel(pos,channel)
-	if channel == "colour_carrier/"..pos.z .."/"..pos.y .."/"..pos.x then
+	if channel == "colour_carrier/"..pos.z .."/"..pos.y .."/"..pos.x
+	or channel == "colour_carrier_all" then
 		return true
 	end
 	if string.find(channel, "colour_carrier(", 1, true) ~= 1 then
