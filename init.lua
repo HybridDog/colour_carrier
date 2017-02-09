@@ -56,8 +56,43 @@ local function remove_entity(pos)
 	end
 end
 
-local function pos_channel_id(pos)
-	return "colour_carrier/"..pos.z .."/"..pos.y .."/"..pos.x
+local function check_channel(pos,channel)
+	if channel == "colour_carrier/"..pos.z .."/"..pos.y .."/"..pos.x
+	or channel == "colour_carrier_all" then
+		return true
+	end
+	if string.sub(channel, 1, 15) ~= "colour_carrier(" then
+		return false
+	end
+	channel = string.sub(channel, 16, -2)
+	local p = {{}, {}}
+	if string.find(channel, "),(", 1, true) then
+		local s = string.split(channel, "),(")
+		if #s > 2 then
+			return false
+		end
+		for i = 1, 2 do
+			p[i] = string.split(s[i], ",")
+		end
+	else
+		p[1] = string.split(channel, ",")
+		p[2] = p[1]
+	end
+	for i = 1, 2 do
+		if p[i] == nil or #p[i] ~= 3 then
+			return false
+		end
+	end
+	local xyz = {"x", "y", "z"}
+	for i = 1, 3 do
+		local n1 = tonumber(p[1][i]) or pos[xyz[i]] + 1
+		local n2 = tonumber(p[2][i]) or pos[xyz[i]] - 1
+		if not ((n1 <= pos[xyz[i]] or p[1][i] == "*")
+		and (n2 >= pos[xyz[i]] or p[2][i] == "*")) then
+			return false
+		end
+	end
+	return true
 end
 
 local function on_digiline_receive(pos, node, channel, msg)
@@ -65,7 +100,7 @@ local function on_digiline_receive(pos, node, channel, msg)
 		return
 	end
 
-	if #msg ~= 7 or (channel ~= pos_channel_id(pos) and channel ~= "colour_carrier_all") then
+	if #msg ~= 7 or not check_channel(pos, channel) then
 		return
 	end
 
