@@ -61,7 +61,7 @@ local function check_channel(pos,channel)
 	or channel == "colour_carrier_all" then
 		return true
 	end
-	if string.find(channel, "colour_carrier(", 1, true) ~= 1 then
+	if string.sub(channel, 1, 15) ~= "colour_carrier(" then
 		return false
 	end
 	channel = string.sub(channel, 16, -2)
@@ -100,7 +100,7 @@ local function on_digiline_receive(pos, node, channel, msg)
 		return
 	end
 
-	if #msg ~= 7 or not check_channel(pos,channel) then
+	if #msg ~= 7 or not check_channel(pos, channel) then
 		return
 	end
 
