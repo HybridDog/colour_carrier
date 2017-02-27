@@ -4,7 +4,7 @@ channel is ```"colour_carrier_all"``` or ```"colour_carrier/"..pos.z .."/"..pos.
 or ```"colour_carrier("..pos.x ..","..pos.y ..","..pos.z..")"``` where ```"*" ``` instead of one of the positions makes the one pos ignored
 or ```"colour_carrier("..startpos.x ..","..startpos.y ..","..startpos.z..")("..endpos.x ..","..endpos.y ..","..endpos.z)``` where ```"*" ``` instead of one of the positions means infinite
 
-msg is "#RRGGBB"
+msg is "#RRGGBB" or "#RGB"
 
 **Depends:** see [depends.txt](https://raw.githubusercontent.com/HybridDog/colour_carrier/master/depends.txt)  
 **License:** see [LICENSE.txt](https://raw.githubusercontent.com/HybridDog/colour_carrier/master/LICENSE.txt)  
@@ -16,6 +16,6 @@ If you got ideas or found bugs, please tell them to me.
 
 
 TODO:  
-— --add crafting--  
+— ~~add crafting~~  
 — change groups, maybe placement_prediction, etc.  
 
