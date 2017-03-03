@@ -38,7 +38,8 @@ minetest.register_entity("colour_carrier:entity", {
 local function get_entity(pos)
 	for _,obj in pairs(minetest.get_objects_inside_radius(pos, .5)) do
 		local ent = obj:get_luaentity()
-		if ent and ent.name == "colour_carrier:entity" then
+		if ent
+		and ent.name == "colour_carrier:entity" then
 			return ent
 		end
 	end
@@ -57,7 +58,7 @@ end
 
 local function check_channel(pos,channel)
 	if channel == "colour_carrier/"..pos.z .."/"..pos.y .."/"..pos.x
-			or channel == "colour_carrier_all" then
+	or channel == "colour_carrier_all" then
 		return true
 	end
 	if string.sub(channel, 1, 15) ~= "colour_carrier(" then
@@ -87,7 +88,7 @@ local function check_channel(pos,channel)
 		local n1 = tonumber(p[1][i]) or pos[xyz[i]] + 1
 		local n2 = tonumber(p[2][i]) or pos[xyz[i]] - 1
 		if not ((n1 <= pos[xyz[i]] or p[1][i] == "*")
-				and (n2 >= pos[xyz[i]] or p[2][i] == "*")) then
+		and (n2 >= pos[xyz[i]] or p[2][i] == "*")) then
 			return false
 		end
 	end
@@ -98,7 +99,8 @@ local function check_msg(msg)
 	if type(msg) ~= "string" then
 		return false
 	end
-	if #msg ~= 7 and #msg ~= 4 then
+	if #msg ~= 7
+	and #msg ~= 4 then
 		return false
 	end
 	if string.sub(msg, 1, 1) ~= "#" then
@@ -126,7 +128,8 @@ local function check_msg(msg)
 end
 
 local function on_digiline_receive(pos, node, channel, msg)
-	if not (check_msg(msg) and check_channel(pos, channel)) then
+	if not check_msg(msg)
+	or not check_channel(pos, channel) then
 		return
 	end
 
