@@ -95,12 +95,41 @@ local function check_channel(pos,channel)
 	return true
 end
 
-local function on_digiline_receive(pos, node, channel, msg)
+local function check_msg(msg)
 	if type(msg) ~= "string" then
-		return
+		return false
 	end
+	if #msg ~= 7
+	and #msg ~= 4 then
+		return false
+	end
+	if string.sub(msg, 1, 1) ~= "#" then
+		return false
+	end
+	msg = string.sub(msg, 2)
+	local chars = {
+		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a",
+		"b", "c", "d", "e", "f", "A", "B", "C", "D", "E", "F",
+	}
+	for i = 1, #msg do
+		local char = string.sub(msg, i, i)
+		local ok = false
+		for k = 1, #chars do
+			if chars[k] == char then
+				ok = true
+				break
+			end
+		end
+		if not ok then
+			return false
+		end
+	end
+	return true
+end
 
-	if #msg ~= 7 or not check_channel(pos, channel) then
+local function on_digiline_receive(pos, node, channel, msg)
+	if not check_msg(msg)
+	or not check_channel(pos, channel) then
 		return
 	end
 
@@ -136,6 +165,20 @@ minetest.register_node("colour_carrier:node", {
 	},
 })
 
+if minetest.get_modpath("mesecons_lightstone") then
+	local lr = "mesecons_lightstone:lightstone_red_off"
+	local lg = "mesecons_lightstone:lightstone_green_off"
+	local lb = "mesecons_lightstone:lightstone_blue_off"
+	local dw = "digilines:wire_std_00000000"
+	minetest.register_craft({
+		output = "colour_carrier:node 3",
+		recipe = {
+			{lr, lg, lb},
+			{dw, dw, dw},
+			{lr, lg, lb}
+		}
+	})
+end
 
 local time = math.floor(tonumber(os.clock()-load_time_start)*100+0.5)/100
 local msg = "[colour_carrier] loaded after ca. "..time
@@ -143,15 +186,4 @@ if time > 0.05 then
 	print(msg)
 else
 	minetest.log("info", msg)
-end
-
-if minetest.get_modpath("mesecons_lightstone") then
-	minetest.register_craft({
-		output = "colour_carrier:node 3",
-		recipe = {
-			{"mesecons_lightstone:lightstone_red_off","mesecons_lightstone:lightstone_green_off","mesecons_lightstone:lightstone_blue_off"},
-			{"digilines:wire_std_00000000","digilines:wire_std_00000000","digilines:wire_std_00000000"},
-			{"mesecons_lightstone:lightstone_red_off","mesecons_lightstone:lightstone_green_off","mesecons_lightstone:lightstone_blue_off"}
-		}
-	})
 end
