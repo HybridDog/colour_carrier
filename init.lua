@@ -19,7 +19,7 @@ minetest.register_entity("colour_carrier:entity", {
 	collisionbox = {0,0,0,0,0,0},
 	physical = false,
 	on_activate = function(self, staticdata)
-		local pos = self.object:getpos()
+		local pos = self.object:get_pos()
 		if minetest.get_node(pos).name ~= "colour_carrier:node" then
 			self.object:remove()
 			return
@@ -145,11 +145,13 @@ end
 
 minetest.register_node("colour_carrier:node", {
 	description = "colour carrier",
-	tiles = {"blank.png"},
+	--~ tiles = {"blank.png"},
+	drawtype = "airlike",
 	sunlight_propagates = true,
 	paramtype = "light",
 	inventory_image = "colour_carrier.png",
-	groups = {cracky=3, stone=1},
+	wield_image = "colour_carrier.png",
+	groups = {cracky = 3, stone = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		set_entity(pos)
